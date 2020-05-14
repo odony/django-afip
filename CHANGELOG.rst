@@ -4,6 +4,27 @@ Changelog
 This file contains a brief summary of new features and dependency changes or
 releases, in reverse chronological order.
 
+8.0.0
+-----
+
+The original intent of this library was to provide only receipt validation,
+when printable were later implemented, they were designed as an "optional"
+extra.
+
+Because of this, the fields required for printing [but not validating] were
+kept in different tables. This has been very confusing for users. I've gotten
+lots of emails, and, ultimately, it seems it was bad design, since everyone
+also wants to use this library to generate the PDFs too.
+
+Many of the changes in this release are an attempt to gradually improve this
+design. The following is a details list of all the breaking changes you need to
+keep in mind.
+
+* The fields from the ``TaxPayerExtras`` have moved into the ``TaxPayer``
+  model. A migration will handle copying data from table to the other for you.
+  If you have any references to this model (e.g.: forms for your users, custom
+  admins, etc), make sure you update these to point to the ``TaxPayer`` model.
+
 7.1.0
 -----
 * Dropped support for Python < 3.6.

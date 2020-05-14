@@ -139,7 +139,6 @@ class ReceiptPDFTestCase(TestCase):
         """Test the HTML generation view."""
         pdf = factories.ReceiptPDFFactory()
         factories.ReceiptValidationFactory(receipt=pdf.receipt)
-        factories.TaxPayerExtras(taxpayer=pdf.receipt.point_of_sales.owner)
 
         client = Client()
         response = client.get(
