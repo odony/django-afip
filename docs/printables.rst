@@ -54,18 +54,14 @@ URL-param, so URL registration should look something like:
 
     url(
         r'^invoices/pdf/(?P<pk>\d+)?$',
-        views.ReceiptHTMLView.as_view(),
+        views.ReceiptPDFView.as_view(),
         name='receipt_view',
     ),
 
 Note that you'll generally want to subclass these and add some for of
 permission checking.
 
-.. autoclass:: django_afip.views.ReceiptHTMLView
-    :members:
 .. autoclass:: django_afip.views.ReceiptPDFView
-    :members:
-.. autoclass:: django_afip.views.ReceiptPDFDisplayView
     :members:
 
 Templates
