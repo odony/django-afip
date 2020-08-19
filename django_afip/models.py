@@ -1,8 +1,6 @@
-import base64
 import logging
 import os
 import random
-import uuid
 from base64 import b64encode
 from datetime import datetime
 from datetime import timedelta
@@ -338,7 +336,7 @@ class TaxPayer(models.Model):
 
         with NamedTemporaryFile(suffix=".key") as file_:
             crypto.create_key(file_)
-            self.key = File(file_, name="{}.key".format(uuid.uuid4().hex))
+            self.key = File(file_, name="{}.key".format(uuid4().hex))
             self.save()
 
         return True
@@ -499,7 +497,7 @@ class TaxPayerExtras(models.Model):
         """This TaxPayer's logo as a data uri."""
         _, ext = os.path.splitext(self.logo.file.name)
         with self.logo.open() as f:
-            data = base64.b64encode(f.read())
+            data = b64encode(f.read())
 
         return "data:image/{};base64,{}".format(
             ext[1:], data.decode()  # Remove the leading dot.
@@ -1116,7 +1114,7 @@ class ReceiptPDF(models.Model):
         _, extension = os.path.splitext(os.path.basename(filename))
         uuid = uuid4().hex
         buckets = uuid[0:2], uuid[2:4]
-        filename = "".join([uuid4().hex, extension])
+        filename = "".join([uuid, extension])
 
         return os.path.join("afip/receipts", buckets[0], buckets[1], filename)
 
@@ -1175,7 +1173,7 @@ class ReceiptPDF(models.Model):
                 _("Cannot generate pdf for non-authorized receipt")
             )
 
-        self.pdf_file = File(BytesIO(), name="{}.pdf".format(uuid.uuid4().hex))
+        self.pdf_file = File(BytesIO(), name="{}.pdf".format(uuid4().hex))
         render_pdf(
             template="receipts/code_{}.html".format(self.receipt.receipt_type.code,),
             file_=self.pdf_file,
