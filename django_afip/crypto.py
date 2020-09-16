@@ -1,5 +1,6 @@
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import smime
+from cryptography.hazmat.primitives.serialization import Encoding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.x509 import load_pem_x509_certificate
 from OpenSSL import crypto
@@ -23,9 +24,9 @@ def create_embeded_pkcs7_signature(data: bytes, cert: bytes, key: bytes):
 
     signed_data = (
         smime.SMIMESignatureBuilder()
-        .add_data(data)
+        .set_data(data)
         .add_signer(signcert, pkey, hashes.SHA256())
-        .sign(smime.SMIMEEncoding.Binary, [smime.SMIMEOptions.Binary])
+        .sign(Encoding.DER, [smime.SMIMEOptions.Binary])
     )
     return signed_data
 
