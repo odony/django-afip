@@ -12,7 +12,7 @@ from zeep.cache import SqliteCache
 from zeep.transports import Transport
 
 TZ_AR = pytz.timezone(pytz.country_timezones["ar"][0])
-CIPHERS = DEFAULT_CIPHERS + "HIGH:!DH:!aNULL"
+CIPHERS = DEFAULT_CIPHERS + ":!DH"
 WSDLS = {
     ("wsaa", False): "https://wsaa.afip.gov.ar/ws/services/LoginCms?wsdl",
     ("wsfe", False): "https://servicios1.afip.gov.ar/wsfev1/service.asmx?WSDL",
